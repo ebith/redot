@@ -1,0 +1,16 @@
+{
+  "name": "redot",
+  "version": "0.0.1",
+  "author": "ebith <ebith.h@gmail.com>",
+  "dependencies": {
+    "byline": "*",
+    "colors": "*",
+    "cron": "*",
+    "dateformat": "*",
+    "ent": "*",
+    "hiredis": "*",
+    "oauth": "*",
+    "redis": "*",
+    "request": "*"
+  }
+}

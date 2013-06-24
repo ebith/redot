@@ -1,0 +1,18 @@
+module.exports = {
+  cronTime: '0 * * * * *'
+  subreddit: 'GameDeals'
+  ignoreTitle: /PS3|Play\s?Station|Xbox|Wii|3DS|PSP|Shipping/i
+  ignoreDomain: ['play.google.com', 'itunes.apple.com']
+  ignoreFlair: /Console|Physical/i
+  waitingTime: 300
+  redisKey: 'gamedeals'
+
+  #Twitter
+  id_str: '1539559302'
+  consumerKey: ''
+  consumerSecret: ''
+  accessToken: ''
+  accessTokenSecret: ''
+
+  debug: false
+}
