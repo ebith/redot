@@ -104,39 +104,39 @@ streaming = ->
     ls =  res.pipe es.split '\n'
 
     ls.on 'data', (line) ->
-      if line.length > 1
-        tweet = JSON.parse line
-        if tweet.in_reply_to_user_id_str is config.id_str
-          tmp = (tweet.text.split '@rGameDeals')[1].trim().split ' '
-          command = tmp.shift()
-          param = tmp.join(' ')
-          switch command
-            when 'add'
-              unless users[tweet.user.id_str]
-                users[tweet.user.id_str] = {}
-                users[tweet.user.id_str].titles = []
-              user = users[tweet.user.id_str]
-              user.screen_name = tweet.user.screen_name
-              user.titles.push param
-              redisClient.set config.redisKey, (JSON.stringify users), (err, res) ->
-                if res is 'OK'
-                  postTweet "@#{tweet.user.screen_name} #{param} added"
-              do loadUser
-            when 'ls', 'list'
-              if user = users[tweet.user.id_str]
-                list = ''
-                for v, i in user.titles
-                  list += "#{i}:'#{v}' "
-                postTweet "@#{tweet.user.screen_name} #{list}"
-            when 'del', 'delete'
-              if user = users[tweet.user.id_str]
-                if user.titles.length >= param
-                  title = user.titles[param]
-                  user.titles.splice param, 1
-                  redisClient.set config.redisKey, (JSON.stringify users), (err, res) ->
-                    if res is 'OK'
-                      postTweet "@#{tweet.user.screen_name} #{param}:'#{title}' deleted"
-                  do loadUser
+      return unless line.length > 1
+      tweet = JSON.parse line
+      if tweet.in_reply_to_user_id_str is config.id_str
+        tmp = (tweet.text.split '@rGameDeals')[1].trim().split ' '
+        command = tmp.shift()
+        param = tmp.join(' ')
+        switch command
+          when 'add'
+            unless users[tweet.user.id_str]
+              users[tweet.user.id_str] = {}
+              users[tweet.user.id_str].titles = []
+            user = users[tweet.user.id_str]
+            user.screen_name = tweet.user.screen_name
+            user.titles.push param
+            redisClient.set config.redisKey, (JSON.stringify users), (err, res) ->
+              if res is 'OK'
+                postTweet "@#{tweet.user.screen_name} #{param} added"
+            do loadUser
+          when 'ls', 'list'
+            if user = users[tweet.user.id_str]
+              list = ''
+              for v, i in user.titles
+                list += "#{i}:'#{v}' "
+              postTweet "@#{tweet.user.screen_name} #{list}"
+          when 'del', 'delete'
+            if user = users[tweet.user.id_str]
+              if user.titles.length >= param
+                title = user.titles[param]
+                user.titles.splice param, 1
+                redisClient.set config.redisKey, (JSON.stringify users), (err, res) ->
+                  if res is 'OK'
+                    postTweet "@#{tweet.user.screen_name} #{param}:'#{title}' deleted"
+                do loadUser
 
     ls.on 'end', ->
       do restartStream
