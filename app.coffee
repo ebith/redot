@@ -131,10 +131,11 @@ streaming = ->
             when 'del', 'delete'
               if user = users[tweet.user.id_str]
                 if user.titles.length >= param
+                  title = user.titles[param]
                   user.titles.splice param, 1
                   redisClient.set config.redisKey, (JSON.stringify users), (err, res) ->
                     if res is 'OK'
-                      postTweet "@#{tweet.user.screen_name} #{param}:'#{user.titles[param]}' deleted"
+                      postTweet "@#{tweet.user.screen_name} #{param}:'#{title}' deleted"
                   do loadUser
 
     ls.on 'end', ->
