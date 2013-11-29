@@ -93,7 +93,7 @@ postTweet = (msg, reply=false) ->
 
 restartCount = 0
 restartStream = ->
-  setTimeout (-> do streaming), 1000
+  setTimeout (-> do streaming), 10 * 1000
   restartCount++
 
 streaming = ->
