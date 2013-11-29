@@ -2,7 +2,7 @@ fs = require 'fs'
 cronJob = (require 'cron').CronJob
 request = require 'request'
 OAuth = (require 'oauth').OAuth
-byline = require 'byline'
+es = require 'event-stream'
 ent = require 'ent'
 
 colors = require 'colors'
@@ -101,10 +101,10 @@ streaming = ->
   req = oauth.get streamUrl, config.accessToken, config.accessTokenSecret
   req.on 'response', (res) ->
     res.setEncoding 'utf8'
-    ls = byline.createLineStream res
+    ls =  res.pipe es.split '\n'
 
     ls.on 'data', (line) ->
-      if line isnt ''
+      if line.length > 1
         tweet = JSON.parse line
         if tweet.in_reply_to_user_id_str is config.id_str
           tmp = (tweet.text.split '@rGameDeals')[1].trim().split ' '

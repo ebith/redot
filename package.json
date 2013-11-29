@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "author": "ebith <ebith.h@gmail.com>",
   "dependencies": {
-    "byline": "*",
     "colors": "*",
     "cron": "*",
     "dateformat": "*",
@@ -11,6 +10,7 @@
     "hiredis": "*",
     "oauth": "*",
     "redis": "*",
-    "request": "*"
+    "request": "*",
+    "event-stream": "~3.0.16"
   }
 }
