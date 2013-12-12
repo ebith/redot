@@ -50,9 +50,9 @@ request "http://www.reddit.com/r/#{config.subreddit}/new/.json?sort=new&limit=10
     JSON.parse(body).data.children.reverse().forEach (post) ->
       posts.push post.data.id
     do job.start
+    log 'job started'
 
 job = new cronJob config.cronTime, ->
-  log 'job runnning'
   loadConfig configMtime
 
   request "http://www.reddit.com/r/#{config.subreddit}/new/.json?sort=new&limit=10", (err, res, body) ->
