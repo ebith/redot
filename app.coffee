@@ -131,8 +131,7 @@ streaming = ->
           when 'del', 'delete'
             param = (param.split '')[0]
             if user = users[tweet.user.id_str]
-              if user.titles.length >= param
-                title = user.titles[param]
+              if title = user.titles[param]
                 user.titles.splice param, 1
                 redisClient.set config.redisKey, (JSON.stringify users), (err, res) ->
                   if res is 'OK'
