@@ -129,6 +129,7 @@ streaming = ->
                 list += "#{i}:'#{v}' "
               postTweet "@#{tweet.user.screen_name} #{list}"
           when 'del', 'delete'
+            param = (param.split '')[0]
             if user = users[tweet.user.id_str]
               if user.titles.length >= param
                 title = user.titles[param]
